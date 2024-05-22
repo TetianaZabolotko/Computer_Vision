@@ -10,7 +10,7 @@ m,n = im.shape[0:2]
 imnbr = len(imlist)
 
 # create matrix to create all linear images
-immatrix = array([array(Image.open(im)).flatten() for im in imlist], 'f')(
+immatrix = array([array(Image.open(im)).flatten() for im in imlist], 'f')
 
 # pca
 V,S,immean = PCA.pca(immatrix)
