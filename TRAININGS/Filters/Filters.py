@@ -9,8 +9,10 @@ import matplotlib.pyplot as plt
 from scipy.ndimage import filters
 
 #filters with cv2
-im_cv  = cv2.imread(os.path.join('.', 'logo.jpg'))
-im_cv = cv2.cvtColor(im_cv, cv2.COLOR_RGB2GRAY)
+im_cv_orig  = cv2.imread(os.path.join('.', 'logo.jpg'))
+# im_cv  = cv2.imread(os.path.join('.', 'image.png'))
+cv2.imshow('Origin', im_cv_orig)
+im_cv = cv2.cvtColor(im_cv_orig, cv2.COLOR_RGB2GRAY)
 # print(im_cv)
 # blur = cv2.GaussianBlur(im_cv,(5,5),0) # standart deviation
 # cv2.imshow('blur_im', blur)
@@ -30,11 +32,14 @@ new_width = 270*2
 new_height = 270*3
 new_dim = (new_width, new_height)
 im_cv = cv2.resize(im_cv, new_dim)
-cv2.imshow('Origina', im_cv)
+cv2.imshow('Origin_gray', im_cv)
 
-ret, thresh = cv2.threshold(im_cv, 150, 255, cv2.THRESH_BINARY)
+im_edge_Canny = cv2.Canny(im_cv_orig,100,200)
+cv2.imshow('Canny', im_edge_Canny)
+
+ret, thresh = cv2.threshold(im_cv, 170, 200, cv2.THRESH_BINARY)
 contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-cv2.imshow('Contours', thresh)
+# cv2.imshow('Contours', thresh)
 
 # DERIVATIVES
 # X
@@ -42,7 +47,7 @@ cv2.imshow('Contours', thresh)
 sobel_X = cv2.Sobel(im_cv,cv2.CV_64F,1,0)
 sobel_X_abs = np.int8(np.absolute(sobel_X))
 cv2.imshow('X', sobel_X)
-cv2.imshow('X_abs', sobel_X_abs)
+# cv2.imshow('X_abs', sobel_X_abs)
 
 sobel_Y = cv2.Sobel(im_cv,cv2.CV_64F,0,1)
 sobel_Y_abs = np.int8(np.absolute(sobel_Y))
